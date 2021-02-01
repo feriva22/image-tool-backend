@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { Entity, ObjectID, ObjectIdColumn, Column, BeforeInsert, AfterLoad } from "typeorm";
 
 @Entity()
@@ -21,7 +22,7 @@ export class ImageRestoration {
 
   @AfterLoad()
   setServerURL() {
-    this.preimg_url = "http://localhost:4002/" + this.preimg_url;
-    this.postimg_url = "http://localhost:4002/" + this.postimg_url;
+    this.preimg_url = process.env.URL_DEPLOY + this.preimg_url;
+    this.postimg_url = process.env.URL_DEPLOY + this.postimg_url;
   }
 }
