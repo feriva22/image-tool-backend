@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+ADD .env.production .env
+
 RUN yarn && yarn build
 
 FROM node:lts-alpine
@@ -14,7 +16,7 @@ COPY --from=build /app /app
 
 RUN apk add tzdata
 
-EXPOSE 4002
+EXPOSE 80
 
 ENV TZ=Asia/Jakarta
 
