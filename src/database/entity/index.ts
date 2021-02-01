@@ -1,0 +1,1 @@
+export { ImageRestoration } from "./ImageRestoration";

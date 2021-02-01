@@ -1,0 +1,33 @@
+[
+   {
+      "name": "default",
+      "type": "postgres",
+      "host": "host.docker.internal",
+      "port": 5432,
+      "username": "postgres",
+      "password": "R@hasi4lo",
+      "database": "db-testing",
+      "synchronize": true,
+      "logging": false,
+      "entities": [
+         "dist/database/entity/**/*.js"
+      ],
+      "migrations": [
+         "dist/database/migration/**/*.js"
+      ],
+      "subscribers": [
+         "dist/database/subscriber/**/*.js"
+      ],
+      "seeds": [
+         "dist/database/seeder/**/*{.js}"
+      ],
+      "factories": [
+         "dist/database/factory/**/*{.js}"
+      ],
+      "cli": {
+         "entitiesDir": "src/database/entity/",
+         "migrationsDir": "src/database/migration/",
+         "subscribersDir": "src/database/subscriber/"
+      }
+   }
+]

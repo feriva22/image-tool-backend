@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: resto-backend
+  name: azure-resto-backend-prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azure-resto-backend-prod
+  template:
+    metadata:
+      labels:
+        app: azure-resto-backend-prod
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: resto-backend-container
+          image: kodinganku.azurecr.io/resto-backend:v1.0.0-prod
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: resto-backend
+  name: resto-service-loadbalancer-prod
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+  selector:
+    app: azure-resto-backend-prod
