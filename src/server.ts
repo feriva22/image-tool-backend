@@ -22,6 +22,10 @@ async function main() {
   });
 
   app.use("/public", express.static(__dirname + "/public"));
+  app.get("/download", function(req, res) {
+    let url_path = req.query.path;
+    res.download(__dirname + "/" + url_path);
+  });
 
   if (process.env.USE_DB == "true") {
     try {

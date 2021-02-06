@@ -47,3 +47,8 @@ export async function generateWatermarkImage(imgPath: string, waterMarkText: str
   const loc_y = image.bitmap.height - image.bitmap.height * 0.1;
   return image.print(fontWatermark, loc_x, loc_y, waterMarkText);
 }
+
+export async function generateImageNewType(imgPath: string, targetSave: string, targetType: string): Promise<Jimp> {
+  const [image] = await Promise.all([Jimp.read(imgPath)]);
+  return await image.quality(60).writeAsync(targetSave);
+}
