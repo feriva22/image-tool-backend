@@ -1,5 +1,5 @@
 {
-  "name": "api-expressjs-boilerplate",
+  "name": "image-tool-backend",
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
