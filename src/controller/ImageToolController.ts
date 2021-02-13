@@ -28,7 +28,7 @@ import { nanoid } from "nanoid";
 import fs from "fs";
 import moment from "moment";
 const { BlobServiceClient, BlobSASPermissions } = require("@azure/storage-blob");
-
+var url = require("url");
 class imgRestorationData {
   @IsBase64()
   img: string;
@@ -148,6 +148,8 @@ export class ImageToolController {
     @HeaderParam("Host") host: string,
     @HeaderParam("Referer") referer: string
   ) {
+    const parserUrl = url.parse(referer);
+    const baseUrl = parserUrl.protocol + "//" + parserUrl.host;
     try {
       //check permission first
       if (data.permission == Permission.Secure && data.pass_secure == "") {
@@ -159,7 +161,7 @@ export class ImageToolController {
       newImgHost.description = data.title;
       newImgHost.blob_name = uuidv4() + ".png";
       newImgHost.gen_id = nanoid(5);
-      newImgHost.gen_url = referer + "gen_url/" + newImgHost.gen_id;
+      newImgHost.gen_url = baseUrl + "/gen_url/" + newImgHost.gen_id;
       newImgHost.permission = data.permission;
       newImgHost.secret_access = data.pass_secure;
       newImgHost.expirate_type = data.upload_expiration;
