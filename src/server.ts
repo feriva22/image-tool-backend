@@ -3,11 +3,13 @@ require("dotenv").config();
 import "reflect-metadata"; // this shim is required
 import { useExpressServer } from "routing-controllers";
 import loaders from "./loaders";
+import { deleteExpiredImage } from "./lib/utils";
 
 async function main() {
   console.log(`Running on Environtment ${process.env.NODE_ENV} 🔥`);
   console.log(`Version App : ${process.env.APP_VERSION || "none"}`);
 
+  const cron = require("node-cron");
   let express = require("express");
   let cors = require("cors");
   let app = express();
@@ -22,7 +24,7 @@ async function main() {
   });
 
   app.use("/public", express.static(__dirname + "/public"));
-  app.get("/download", function(req, res) {
+  app.get("/download", function (req, res) {
     let url_path = req.query.path;
     res.download(__dirname + "/" + url_path);
   });
@@ -36,8 +38,12 @@ async function main() {
     }
   }
 
-  const PORT = process.env.PORT || 4000;
+  //Running cronjob to delete all image expiry every 2 minute
+  cron.schedule("*/2 * * * *", function () {
+    deleteExpiredImage();
+  });
 
+  const PORT = process.env.PORT || 4000;
   // run express application
   app.listen(PORT, "0.0.0.0", async () => {
     console.log(`[LISTEN] 🚀🚀🚀 Server running on port ${PORT}`);
