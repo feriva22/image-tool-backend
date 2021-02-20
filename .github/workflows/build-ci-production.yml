@@ -5,7 +5,7 @@ on:
       - "*.*.*"
 env:
   IMAGE_NAME: imagetool-backend
-  REGISTRY_URL: imagetool.azurecr.io
+  REGISTRY_URL: imagetoolcr.azurecr.io
 
 jobs:
   build-image:
